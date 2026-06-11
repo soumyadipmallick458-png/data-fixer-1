@@ -3,17 +3,19 @@ from datafixer import clean
 
 df = pd.DataFrame({
     " Name ": [" Alice ", " Bob ", " Bob ", None],
-    " Age ": [20, None, None, 30]
+    " Sales ": [10, 20, 20, 1000]
 })
 
 result = (
     clean(df)
     .fix_column_names()
-    .strip_text()
-    .lowercase_text()
-    .fill_missing("unknown")
+    .standardize_text()
     .remove_duplicates()
+    .remove_outliers("sales")
     .get()
 )
 
 print(result)
+
+print("\nSummary:")
+print(clean(result).summary())
