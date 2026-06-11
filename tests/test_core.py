@@ -14,3 +14,11 @@ def test_remove_duplicates():
     result = clean(df).remove_duplicates().get()
 
     assert len(result) == 1
+
+def test_fill_missing():
+
+    df = pd.DataFrame({"name": ["a", None]})
+
+    result = clean(df).fill_missing("unknown").get()
+
+    assert result.iloc[1]["name"] == "unknown"
