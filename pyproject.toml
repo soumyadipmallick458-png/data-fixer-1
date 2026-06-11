@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datafixer"
+version = "0.1.0"
+description = "Chainable pandas cleaning utilities"
+dependencies = ["pandas"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
