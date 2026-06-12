@@ -22,7 +22,12 @@ pip install -e
 
 ## Quick Start
 
+This example cleans column names, removes duplicates,
+standardizes text values, removes outliers, and generates
+a data quality report.
+
 ```python
+
 import pandas as pd
 from datafixer import clean
 
@@ -31,13 +36,18 @@ df = pd.DataFrame({
     " Sales ": [10, 20, 1000]
 })
 
-result = (
+cleaner = (
     clean(df)
     .fix_column_names()
+    .remove_duplicates()
     .standardize_text()
     .remove_outliers("sales")
-    .get()
 )
 
+result = cleaner.get()
+report = cleaner.data_quality_report()
+
 print(result)
+print(report)
 ```
+
