@@ -32,7 +32,7 @@ class Clean:
         return self
 
     def standardize_text(self):
-        for col in self.df.select_dtypes(include="object"):
+        for col in self.df.select_dtypes(include=["object", "string"]):
             self.df[col] = (
                 self.df[col]
                 .str.strip()
@@ -47,6 +47,7 @@ class Clean:
             "missing_values": int(self.df.isna().sum().sum()),
             "duplicate_rows": int(self.df.duplicated().sum())
         }
+
 
     def remove_outliers(self, column):
         q1 = self.df[column].quantile(0.25)
@@ -63,6 +64,11 @@ class Clean:
         ]
 
         return self
+
+    def drop_empty_columns(self):
+        self.df = self.df.dropna(axis=1, how="all")
+        return self
+
 
     def get(self):
         return self.df

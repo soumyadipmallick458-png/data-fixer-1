@@ -1,6 +1,16 @@
 import pandas as pd
 from datafixer import clean
 
+def test_drop_empty_columns():
+    df = pd.DataFrame({
+        "name": ["Alice", "Bob"],
+        "empty": [None, None]
+    })
+
+    result = clean(df).drop_empty_columns().get()
+
+    assert "empty" not in result.columns
+
 
 def test_fix_column_names():
     df = pd.DataFrame({" Name ": [1]})
