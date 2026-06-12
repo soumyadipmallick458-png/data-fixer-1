@@ -1,22 +1,8 @@
 import pandas as pd
 
-
 class Clean:
-    def __init__(self, df: pd.DataFrame):
-        self.df = df
-
-    def remove_nulls(self):
-        self.df = self.df.dropna()
-        return self
-
-    def fix_column_names(self):
-        self.df.columns = (
-            self.df.columns
-            .str.strip()
-            .str.lower()
-            .str.replace(" ", "_")
-        )
-        return self
+    def __init__(self, df):
+        self.df = df.copy()
 
     def remove_duplicates(self):
         self.df = self.df.drop_duplicates()
@@ -36,6 +22,15 @@ class Clean:
             self.df[col] = self.df[col].str.strip()
         return self
 
+    def fix_column_names(self):
+        self.df.columns = (
+            self.df.columns
+            .str.strip()
+            .str.lower()
+            .str.replace(" ", "_", regex=False)
+        )
+        return self
+
     def standardize_text(self):
         for col in self.df.select_dtypes(include="object"):
             self.df[col] = (
@@ -45,25 +40,13 @@ class Clean:
             )
         return self
 
-    def remove_empty_strings(self):
-        self.df = self.df.replace(r"^\s*$", pd.NA, regex=True)
-        self.df = self.df.dropna()
-        return self
-
-    def drop_empty_columns(self):
-        self.df = self.df.dropna(axis=1, how="all")
-        return self
-
-    def rename_columns(self, mapping):
-        self.df = self.df.rename(columns=mapping)
-        return self
-
-    def sort_by(self, column, ascending=True):
-        self.df = self.df.sort_values(
-            by=column,
-            ascending=ascending
-        )
-        return self
+    def report(self):
+        return {
+            "rows": len(self.df),
+            "columns": len(self.df.columns),
+            "missing_values": int(self.df.isna().sum().sum()),
+            "duplicate_rows": int(self.df.duplicated().sum())
+        }
 
     def remove_outliers(self, column):
         q1 = self.df[column].quantile(0.25)
@@ -80,15 +63,6 @@ class Clean:
         ]
 
         return self
-
-    def summary(self):
-        return {
-            "rows": len(self.df),
-            "columns": len(self.df.columns),
-            "missing_values": int(
-                self.df.isna().sum().sum()
-            )
-        }
 
     def get(self):
         return self.df

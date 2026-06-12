@@ -11,11 +11,10 @@ result = (
     .fix_column_names()
     .standardize_text()
     .remove_duplicates()
-    .remove_outliers("sales")
     .get()
 )
 
 print(result)
 
-print("\nSummary:")
-print(clean(result).summary())
+print("\nReport:")
+print(clean(result).report())
