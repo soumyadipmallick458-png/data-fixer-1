@@ -17,6 +17,9 @@ DataFixer is a lightweight Python library built on top of pandas that provides c
 
 ## Installation
 
+```bash
+pip install -e
+
 ## Quick Start
 
 ```python
