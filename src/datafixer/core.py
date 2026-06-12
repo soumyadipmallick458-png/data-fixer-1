@@ -2,6 +2,10 @@ import pandas as pd
 
 class Clean:
 
+    def summary(self):
+        return self.df.describe(include="all")
+
+
     def data_quality_report(self):
         return {
         "rows": len(self.df),

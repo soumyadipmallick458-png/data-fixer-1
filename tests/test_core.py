@@ -1,6 +1,16 @@
 import pandas as pd
 from datafixer import clean
 
+def test_summary():
+    df = pd.DataFrame({
+        "age": [20, 30, 40],
+        "city": ["A", "B", "C"]
+    })
+
+    result = clean(df).summary()
+
+    assert "age" in result.columns
+
 def test_data_quality_report():
     df = pd.DataFrame({
         "a": [1, None, 3],
