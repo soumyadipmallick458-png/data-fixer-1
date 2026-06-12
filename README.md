@@ -1,6 +1,9 @@
 # DataFixer
 
-DataFixer is a lightweight Python library built on top of pandas that provides chainable data-cleaning utilities for faster exploratory data analysis.
+Description
+
+DataFixer is a lightweight Python library built on top of pandas that provides chainable data-cleaning and data-quality utilities for faster exploratory data analysis.
+
 
 ## Features
 
@@ -14,20 +17,19 @@ DataFixer is a lightweight Python library built on top of pandas that provides c
 - Sort data
 - Remove outliers using IQR
 - Generate dataset summaries
+- Generate data quality reports
 
 ## Installation
 
 ```bash
-pip install -e
+pip install git+https://github.com/soumyadipmallick458-png/data-fixer-1.git
+```
 
 ## Quick Start
 
-This example cleans column names, removes duplicates,
-standardizes text values, removes outliers, and generates
-a data quality report.
+This example cleans column names, removes duplicates, standardizes text values, removes outliers, and generates a data quality report.
 
 ```python
-
 import pandas as pd
 from datafixer import clean
 
@@ -50,4 +52,8 @@ report = cleaner.data_quality_report()
 print(result)
 print(report)
 ```
+## License
+
+MIT License
+
 
