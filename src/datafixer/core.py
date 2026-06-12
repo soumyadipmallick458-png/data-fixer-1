@@ -1,6 +1,20 @@
 import pandas as pd
 
 class Clean:
+
+    def data_quality_report(self):
+        return {
+        "rows": len(self.df),
+        "columns": len(self.df.columns),
+        "missing_values": int(self.df.isna().sum().sum()),
+        "duplicate_rows": int(self.df.duplicated().sum()),
+        "missing_by_column": (
+            self.df.isna()
+            .sum()
+            .to_dict()
+        )
+    }
+
     def __init__(self, df):
         self.df = df.copy()
 

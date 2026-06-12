@@ -1,6 +1,19 @@
 import pandas as pd
 from datafixer import clean
 
+def test_data_quality_report():
+    df = pd.DataFrame({
+        "a": [1, None, 3],
+        "b": [1, 1, 1]
+    })
+
+    report = clean(df).data_quality_report()
+
+    assert report["rows"] == 3
+    assert report["columns"] == 2
+    assert report["missing_values"] == 1
+
+
 def test_drop_empty_columns():
     df = pd.DataFrame({
         "name": ["Alice", "Bob"],
