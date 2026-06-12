@@ -97,3 +97,47 @@ def test_remove_outliers_invalid_column():
 
     with pytest.raises(ValueError):
         clean(df).remove_outliers("age")
+
+def test_empty_dataframe():
+    df = pd.DataFrame()
+
+    result = clean(df).get()
+
+    assert result.empty
+
+def test_remove_duplicates_no_duplicates():
+    df = pd.DataFrame({
+        "a": [1, 2, 3]
+    })
+
+    result = clean(df).remove_duplicates().get()
+
+    assert len(result) == 3
+
+def test_fill_missing_replaces_nulls():
+    df = pd.DataFrame({
+        "a": [1, None, 3]
+    })
+
+    result = clean(df).fill_missing(0).get()
+
+    assert result["a"].isna().sum() == 0
+
+def test_data_quality_report_empty():
+    df = pd.DataFrame()
+
+    report = clean(df).data_quality_report()
+
+    assert report["rows"] == 0
+    assert report["columns"] == 0
+
+def test_summary_returns_dataframe():
+    df = pd.DataFrame({
+        "a": [1, 2, 3]
+    })
+
+    result = clean(df).summary()
+
+    assert isinstance(result, pd.DataFrame)
+
+
