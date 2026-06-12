@@ -2,11 +2,11 @@ import pandas as pd
 
 class Clean:
 
-    def summary(self):
+    def summary(self) -> pd.DataFrame:
         return self.df.describe(include="all")
 
 
-    def data_quality_report(self):
+    def data_quality_report(self) -> dict:
         return {
         "rows": len(self.df),
         "columns": len(self.df.columns),
@@ -22,11 +22,11 @@ class Clean:
     def __init__(self, df):
         self.df = df.copy()
 
-    def remove_duplicates(self):
+    def remove_duplicates(self) -> "clean":
         self.df = self.df.drop_duplicates()
         return self
 
-    def fill_missing(self, value):
+    def fill_missing(self, value) -> "clean":
         self.df = self.df.fillna(value)
         return self
 
@@ -49,7 +49,7 @@ class Clean:
         )
         return self
 
-    def standardize_text(self):
+    def standardize_text(self) -> "clean":
         for col in self.df.select_dtypes(include=["object", "string"]):
             self.df[col] = (
                 self.df[col]
@@ -67,7 +67,11 @@ class Clean:
         }
 
 
-    def remove_outliers(self, column):
+    def remove_outliers(self, column: str) -> "clean":
+        if column not in self.df.columns:
+            raise ValueError(f"Column '{column}' not found")
+
+
         q1 = self.df[column].quantile(0.25)
         q3 = self.df[column].quantile(0.75)
 
@@ -88,5 +92,7 @@ class Clean:
         return self
 
 
-    def get(self):
+    def get(self) -> pd.DataFrame:
         return self.df
+
+

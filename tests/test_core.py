@@ -87,3 +87,13 @@ def test_remove_outliers():
     result = clean(df).remove_outliers("salary").get()
 
     assert len(result) == 4
+
+import pytest
+
+def test_remove_outliers_invalid_column():
+    df = pd.DataFrame({
+        "salary": [10, 20, 30]
+    })
+
+    with pytest.raises(ValueError):
+        clean(df).remove_outliers("age")
